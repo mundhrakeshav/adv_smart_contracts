@@ -6,11 +6,7 @@ library Prime {
         assembly {
             // if _num > 1
             if gt(_num, 1) {
-                if eq(_num, 2) { 
-                    mstore(0x00, 1)
-                    return(0x00, 0x20)
-                }
-                if eq(_num, 3) { 
+                if or(eq(_num, 2), eq(_num, 3)) { 
                     mstore(0x00, 1)
                     return(0x00, 0x20)
                 }
@@ -20,13 +16,14 @@ library Prime {
                 if eq(mod(_num, 3), 0) { return(0x00, 0x20) }
                 for { let index := 5 } or(gt(_num, mul(index, index)), eq(_num, mul(index, index))) { index := add(index, 5) } {
                     // if _num % index == 0 return false
-                    if eq(mod(_num, index), 0) { return(0x00, 0x20) }
+                    if or(eq(mod(_num, index), 0), eq(mod(_num, add(index, 2)), 0)) { return(0x00, 0x20) }
                     // if _num % (index + 2) == 0 return false
-                    if eq(mod(_num, add(index, 2)), 0) { return(0x00, 0x20) }
                 }
+            // Return true
             mstore(0x00, 1)
             return(0x00, 0x20)
             }
+            // Return false
             return(0x00, 0x20)
         }
     }
