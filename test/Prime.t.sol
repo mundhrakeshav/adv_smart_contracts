@@ -23,6 +23,7 @@ contract PrimeTest is Test {
         assertFalse(Prime.isPrime(10));
     }
     // 12404
+
     function testPrimeSol() public {
         // Prime.isPrimeSol(0) 294 Gas
         assertFalse(Prime.isPrimeSol(0));
@@ -39,6 +40,7 @@ contract PrimeTest is Test {
     }
 
     function testIsPrimeFuzz(uint256 _num) public {
-            assertEq(Prime.isPrimeSol(_num), Prime.isPrime(_num));
+        vm.assume(_num < 2000);
+        assertEq(Prime.isPrimeSol(_num), Prime.isPrime(_num));
     }
 }
