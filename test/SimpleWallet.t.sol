@@ -25,10 +25,12 @@ contract SimpleWalletTest is Test {
     function testPayToReceiverContractWithoutCallData() public {
         uint256 _val = 1 ether;
         hoax(address(this));
-        uint x = simpleWallet.makeTx{value: _val}(address(receiverWallet), _val, _selector);
-        emit log_uint(x);
+        (uint256 x) = simpleWallet.makeTx{value: _val}(address(receiverWallet), _val, _selector);
         assertEq(_val, address(receiverWallet).balance);
+        assertEq(x, _val);
+        // emit log_address(simpleWallet.owner());
+        // emit log_address(x);
+        // emit log_address(y);
+        emit log_uint(x);
     }
 }
-
-// 0x47c5202f0000000000000000000000002e234dae75c793f67a35089c9d99245e1c58470b0000000000000000000000000000000000000000000000000de0b6b3a76400001eb72e7800000000000000000000000000000000000000000000000000000000
