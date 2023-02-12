@@ -16,7 +16,7 @@ contract HuffTest is Test {
         addTwoContract = IAddTwo(addr);
     }
 
-    function testPayToReceiverContractWithoutCallDataZ(uint256 a, uint256 b) public {
+    function testShouldAddHuff(uint256 a, uint256 b) public {
         vm.assume(a < 2 ** 128);
         vm.assume(b < 2 ** 128);
         assertEq(addTwoContract.addTwo(a, b), a + b);
