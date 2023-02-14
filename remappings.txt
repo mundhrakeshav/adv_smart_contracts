@@ -1,6 +1,4 @@
 ds-test/=lib/forge-std/lib/ds-test/src/
-ethernaut/=src/CTFs/ethernaut/
 forge-std/=lib/forge-std/src/
-foundry-huff/=/lib/foundry-huff/src/
 openzeppelin-contracts/=lib/openzeppelin-contracts/
-stringutils/=lib/foundry-huff/lib/solidity-stringutils/
+ethernaut/=src/CTFs/ethernaut/
