@@ -1,0 +1,68 @@
+//                       to       val     calldata
+#define function makeTx(address, uint256, bytes) payable returns(uint256)
+
+#define constant OWNER_SLOT = FREE_STORAGE_POINTER()
+
+#define macro MAIN() = takes(0) returns(0) {
+    0x00    calldataload                            //  [calldata[0:31]]
+    0xE0    shr                                     //  [function_signature]
+    //
+    dup1                                            //  [function_signature, function_signature]
+    __FUNC_SIG(makeTx)                              //  [makeTx_signature, function_signature, function_signature]
+    eq                                              //  [makeTx_signature == function_signature, function_signature]
+    makeTxJump                                      //  [makeTxJumpLoc, makeTx_signature == function_signature, function_signature]
+    jumpi                                           //  if(makeTx_signature == function_signature) != 0, Jump to makeTxJumpLoc
+    //
+    no_match jumpi
+
+
+    makeTxJump: MAKE_TX()
+    no_match: FALLBACK()
+
+}
+
+/**
+    0x00 - 0x04                                         func selector
+    0x04 - 0x24:                                        value
+    0x24 - 0x44:                                        address
+    0x44 - 0x64:                                        location of bytes
+    0x64 - 0x84:                                        length of bytes
+    0x84 - (0x84 + length):                             actual data
+
+    CALL Opcode
+
+    gas
+    address
+    value
+    argsOffset
+    argsSize
+    retOffset
+    retSize
+
+*/
+
+#define macro MAKE_TX() = takes(0) returns(0) {
+    0x20                                            //  [retSize]                                                               retSize = 0
+    0x00                                            //  [retDataOffset, retSize]                                                retDataOffset = 0
+    0x64                                            //  [0x64, retDataOffset, retSize]                                          callDataOffset to get length of bytes = 0x64
+    calldataload                                    //  [lengthOfBytes, retDataOffset, retSize]                                 length of bytes is stored at 0x60-0x79, We write it to stack
+    dup1                                            //  [lengthOfBytes, lengthOfBytes, retDataOffset, retSize]                  create a copy of lengthOfBytes, we'll need it later
+    0x84                                            //  [0x80, lengthOfBytes, lengthOfBytes, retDataOffset, retSize]            data which we wanna use as calldata is stored at offset 0x80
+    0x00                                            //  [0x00, 0x80, lengthOfBytes, lengthOfBytes, retDataOffset, retSize]      0x00 is the location at which we wanna write the bytes 
+    calldatacopy                                    //  [lengthOfBytes, retDataOffset, retSize]                                 write calldata into memory at 0 offset
+    0x00                                            //  [0x00, lengthOfBytes, retDataOffset, retSize]                           args offset in memory = 0x00
+    0x24                                            //  [0x20, 0x00, lengthOfBytes, retDataOffset, retSize]                     value offset in calldata = 0x20
+    calldataload                                    //  [value, 0x00, lengthOfBytes, retDataOffset, retSize]                    load value from calldata
+    0x04                                            //  [0x00, value, 0x00, lengthOfBytes, retDataOffset, retSize]              to offset in calldata = 0x00
+    calldataload                                    //  [to, value, 0x00, lengthOfBytes, retDataOffset, retSize]                load to from calldata
+    gas                                             //  [gas, to, value, 0x00, lengthOfBytes, 0x00, 0x20]                       load gas
+    call
+    0x20
+    0x00
+    return
+}
+
+#define macro FALLBACK() = takes(0) returns(0) {
+
+}
+

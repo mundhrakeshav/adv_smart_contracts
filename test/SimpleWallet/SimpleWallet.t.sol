@@ -2,27 +2,20 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
-import {SimpleWallet, Receiver} from "../src/SimpleWallet.sol";
+import {SimpleWallet, Receiver} from "src/SimpleWallet/SimpleWallet.sol";
 
 contract SimpleWalletTest is Test {
+    bytes4 constant _selector = 0x1eb72e78;
     SimpleWallet simpleWallet;
     Receiver receiverWallet;
     address receiverEOA = address(69);
-    bytes4 constant _selector = 0x1eb72e78;
 
     function setUp() public {
         simpleWallet = new SimpleWallet();
         receiverWallet = new Receiver();
     }
 
-    // function testPayToEOA() public {
-    //     uint _val = 1 ether;
-    //     hoax(address(this));
-    //     simpleWallet.payWithoutFunctionCall{value:_val}(receiverEOA, _val);
-    //     assertEq(_val, receiverEOA.balance);
-    // }
-
-    function testPayToReceiverContractWithoutCallData() public {
+    function testSimpleWallMakeTxSol() public {
         uint256 _val = 1 ether;
         hoax(address(this));
         (uint256 x) = simpleWallet.makeTx{value: _val}(address(receiverWallet), _val, _selector);
