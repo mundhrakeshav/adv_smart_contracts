@@ -4,7 +4,7 @@ pragma solidity ^0.8.13;
 import "forge-std/Test.sol";
 
 abstract contract BaseTest is Test {
-    string RPC_URL = "https://arb-goerli.g.alchemy.com/v2/3U5uAERPean0YfI-BApMmL1E3nv_GSJX";
+    string RPC_URL = "https://arb-goerli.g.alchemy.com/v2/6mRxehyMvs6LungLjlrmPvm2vAEOuPL2";
 
     function setUp() public virtual {
         uint256 forkId = vm.createFork(RPC_URL, 7179371);

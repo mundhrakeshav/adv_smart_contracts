@@ -1,8 +1,6 @@
 //                       to       val     calldata
 #define function makeTx(address, uint256, bytes) payable returns(uint256)
 
-#define constant OWNER_SLOT = FREE_STORAGE_POINTER()
-
 #define macro MAIN() = takes(0) returns(0) {
     0x00    calldataload                            //  [calldata[0:31]]
     0xE0    shr                                     //  [function_signature]
