@@ -1,0 +1,57 @@
+//  Interface
+    // Function
+#define function setOwner(address) nonpayable returns()
+#define function owner() view returns(address)
+
+    // Event
+#define event OwnerUpdated(address indexed user, address indexed newOwner)
+
+//  Storage Slots
+#define constant OWNER = FREE_STORAGE_POINTER()
+
+
+//  Internal Constructor
+// params: (address owner)
+#define macro OWNABLE_CONSTRUCTOR() = takes(0) returns(0) {
+    0x02
+    0x00
+    0x00
+    log1
+    SET_OWNER()
+}
+
+#define macro SET_OWNER() = takes(0) returns(0) {
+    0x03
+    0x00
+    0x00
+    log1
+    //
+    0x04    calldataload                                        //  [owner]
+    //
+    codesize
+    0x00
+    0x00
+    log1
+    //
+    [OWNER]                                                     //  [OWNER_SLOT, owner]
+    sstore                                                      //  []
+}
+
+#define macro OWNER() = takes(0) returns(0) {
+    [OWNER] sload                                               //  [owner]
+    0x00    mstore                                              //  
+    0x20    0x00    return
+}
+
+#define macro OWNABLE_MAIN() = takes(0) returns(0) {
+    dup1  __FUNC_SIG(setOwner)  eq  set_owner  jumpi
+    dup1  __FUNC_SIG(owner)     eq  owner      jumpi
+
+    // Bubble up to parent macro
+    no_match    jump
+
+    set_owner:  SET_OWNER()
+    owner:      OWNER()
+
+    no_match:
+}

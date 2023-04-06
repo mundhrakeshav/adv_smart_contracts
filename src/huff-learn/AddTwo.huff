@@ -1,7 +1,5 @@
 #define function addTwo(uint256,uint256) view returns(uint256)
 
-#define constant NUM = 0x420
-
 #define macro MAIN() = takes(0) returns(0) {
 
     // Get the function selector

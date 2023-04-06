@@ -1,5 +1,15 @@
+#include "../huff-utils/Ownable.huff"
+
 //                       to       val     calldata
 #define function makeTx(address, uint256, bytes) payable returns(uint256)
+
+#define macro CONSTRUCTOR() = takes(0) returns(0) {
+    0x01
+    0x00
+    0x00
+    log1
+    OWNABLE_CONSTRUCTOR()
+}
 
 #define macro MAIN() = takes(0) returns(0) {
     0x00    calldataload                            //  [calldata[0:31]]
@@ -10,6 +20,9 @@
     eq                                              //  [makeTx_signature == function_signature, function_signature]
     makeTxJump                                      //  [makeTxJumpLoc, makeTx_signature == function_signature, function_signature]
     jumpi                                           //  if(makeTx_signature == function_signature) != 0, Jump to makeTxJumpLoc
+    
+    OWNABLE_MAIN()
+    
     //
     no_match jumpi
 
