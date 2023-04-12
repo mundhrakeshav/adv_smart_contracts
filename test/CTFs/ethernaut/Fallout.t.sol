@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 
 import {IFallout} from "ethernaut/2IFallout.sol";
-import {BaseTest} from "../BaseTest.t.sol";
+import {BaseTest} from "./BaseTest.t.sol";
 
 contract FalloutTest is BaseTest {
     IFallout public falloutInstance = IFallout(0x56c2AC5CAD2D1cEfF9B1634F0f4123d855D3d3CE);

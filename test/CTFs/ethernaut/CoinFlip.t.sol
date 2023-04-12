@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 
 import {ICoinFlip} from "ethernaut/3ICoinFlip.sol";
-import {BaseTest} from "../BaseTest.t.sol";
+import {BaseTest} from "./BaseTest.t.sol";
 
 // This is a coin flipping game where you need to build up your winning streak by guessing the outcome of a coin flip. To complete this level you'll need to use your psychic abilities to guess the correct outcome 10 times in a row.
 
