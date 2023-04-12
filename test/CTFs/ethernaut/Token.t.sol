@@ -25,7 +25,7 @@ contract TokenTest is BaseTest {
             mstore(0, 0xa9059cbb)
             mstore(32, address())
             mstore(64, 0x100000000000000000000000000000000)
-            pop(call(gas()), sload(tokenInstance.slot), 0, 28, 68, 0, 0))
+            pop(call(gas(), sload(tokenInstance.slot), 0, 28, 68, 0, 0))
         }
     }
 

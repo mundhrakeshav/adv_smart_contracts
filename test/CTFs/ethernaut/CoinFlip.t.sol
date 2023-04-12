@@ -23,7 +23,7 @@ contract CoinFlipTest is BaseTest {
             unchecked {
                 ++i;
             }
-            vm.roll(block.number + 2); // Move 1 block ahead so lastHash != blockValue
+            vm.roll(block.number + 1); // Move 1 block ahead so lastHash != blockValue
         }
     }
 
@@ -50,7 +50,7 @@ contract CoinFlipTest is BaseTest {
             mstore(0, 0x1d263f67) //# mem[28:32] = 0x1d263f67 -> Signature for flip(bool)
             //         //# mem[32:64] = _side value
             mstore(64, 0x1f7b4f30) //# mem[64:96] = 0x1f7b4f30 -> Signature for roll(uint)
-            for { let i := 0 } lt(i, 2) { i := add(i, 1) } {
+            for { let i := 0 } lt(i, 10) { i := add(i, 1) } {
                 let _blockValue := blockhash(sub(number(), 1))
                 let _guess := div(_blockValue, FACTOR)
                 mstore(32, _guess)
@@ -73,7 +73,7 @@ contract CoinFlipTest is BaseTest {
             unchecked {
                 ++i;
             }
-            vm.roll(block.number + 2); // Move 1 block ahead so lastHash != blockValue
+            vm.roll(block.number + 1); // Move 1 block ahead so lastHash != blockValue
         }
         assertEq(coinFlipInstance.consecutiveWins(), 10);
     }
