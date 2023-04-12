@@ -18,5 +18,4 @@ contract AddTwoTest is Test {
         vm.assume(b < type(uint128).max);
         assertEq(addTwoContract.addTwo(a, b), a + b);
     }
-
 }

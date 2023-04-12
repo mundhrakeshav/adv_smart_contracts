@@ -1,4 +1,4 @@
 interface IOwnable {
-	function owner() external view returns (address);
-	function setOwner(address) external;
+    function owner() external view returns (address);
+    function setOwner(address) external;
 }

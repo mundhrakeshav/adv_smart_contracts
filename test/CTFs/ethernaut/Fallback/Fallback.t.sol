@@ -2,12 +2,11 @@
 pragma solidity ^0.8.17;
 
 import "forge-std/Test.sol";
-import {IFallback} from "ethernaut/IFallback.sol";
+import {IFallback} from "ethernaut/1IFallback.sol";
 import {BaseTest} from "../BaseTest.t.sol";
 
 contract FallbackTest is BaseTest {
     IFallback public fallbackInstance = IFallback(payable(0xC537AeeC6BeA05dc625C22Ed75c3716847B9D17b));
-    bytes32 WITHDRAW_FUNCTION_SIG = keccak256("withdraw()");
 
     function setUp() public override {
         super.setUp();

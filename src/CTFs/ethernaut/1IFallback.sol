@@ -10,7 +10,7 @@ interface IFallback {
     function contribute() external payable;
     function withdraw() external;
 
-    function owner() external view returns(address);
-    function getContribution() external view returns(uint256);
-    function contributions(address) external view returns(uint256);
+    function owner() external view returns (address);
+    function getContribution() external view returns (uint256);
+    function contributions(address) external view returns (uint256);
 }
