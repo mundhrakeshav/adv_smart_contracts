@@ -45,7 +45,4 @@ contract ForceTest is BaseTest {
     function testExploitYul() public override {
         exploitYul();
     }
-    function testExploitYulW() public {
-        exploitYul();
-    }
 }
