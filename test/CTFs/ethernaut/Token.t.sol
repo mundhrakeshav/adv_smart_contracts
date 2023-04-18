@@ -32,6 +32,5 @@ contract TokenTest is BaseTest {
     function testExploitYul() public override {
         exploitYul();
         // assertEq(tokenInstance.balanceOf(address(69)), 1 << 128); //! [FAIL. Reason: EvmError: OutOfGas] testExploitYul() (gas: 9223372036854754743)
-
     }
 }

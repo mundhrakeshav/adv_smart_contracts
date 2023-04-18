@@ -37,7 +37,7 @@ contract GateKeeperOneTest is BaseTest {
                 let success := call(gas(), sload(gateKeeperOneInstance.slot), 0, 28, 64, 0, 1)
                 switch success
                 case 1 { break }
-                default { }
+                default {}
             }
         }
     }
@@ -46,5 +46,4 @@ contract GateKeeperOneTest is BaseTest {
         exploitYul();
         assertEq(gateKeeperOneInstance.entrant(), tx.origin);
     }
-
 }
