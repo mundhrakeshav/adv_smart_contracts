@@ -6,7 +6,6 @@ import {IGatekeeperOne} from "ethernaut/13GateKeeperOne.sol";
 import {BaseTest} from "./BaseTest.t.sol";
 
 contract GateKeeperOneTest is BaseTest {
-    // IGatekeeperOne public gateKeeperOneInstance = new IGatekeeperOne();
     IGatekeeperOne public gateKeeperOneInstance = IGatekeeperOne(0x12c9E1F057f426e7aA441717119dFAFa696D8d9A);
 
     function setUp() public override {
