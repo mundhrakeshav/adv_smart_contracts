@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.17;
 
-import {ITelephone} from "ethernaut/4ITelephone.sol";
+import {ITelephone} from "ethernaut/ITelephone.sol";
 import {BaseTest} from "./BaseTest.t.sol";
 
 contract TelephoneTest is BaseTest {

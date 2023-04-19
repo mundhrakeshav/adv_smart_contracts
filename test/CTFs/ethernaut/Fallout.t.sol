@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.17;
 
-import {IFallout} from "ethernaut/2IFallout.sol";
+import {IFallout} from "ethernaut/IFallout.sol";
 import {BaseTest} from "./BaseTest.t.sol";
 
 contract FalloutTest is BaseTest {

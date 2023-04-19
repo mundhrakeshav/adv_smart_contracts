@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.17;
 
-import {IDelegate} from "ethernaut/6Delegate.sol";
+import {IDelegate} from "ethernaut/IDelegate.sol";
 import {BaseTest} from "./BaseTest.t.sol";
 
 contract DelegateTest is BaseTest {

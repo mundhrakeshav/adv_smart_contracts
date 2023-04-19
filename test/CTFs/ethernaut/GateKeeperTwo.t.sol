@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 
 import "forge-std/Test.sol";
-import {IGateKeeperTwo} from "ethernaut/14GateKeeperTwo.sol";
+import {IGateKeeperTwo} from "ethernaut/IGateKeeperTwo.sol";
 import {BaseTest} from "./BaseTest.t.sol";
 
 contract GateKeeperTwoExploit {
@@ -22,8 +22,7 @@ contract GateKeeperTwoExploitYul {
 }
 
 contract GateKeeperTwoTest is BaseTest {
-    // IGateKeeperTwo public gateKeeperTwoInstance = IGateKeeperTwo(0xa3e7317E591D5A0F1c605be1b3aC4D2ae56104d6);
-    IGateKeeperTwo public gateKeeperTwoInstance = new IGateKeeperTwo();
+    IGateKeeperTwo public gateKeeperTwoInstance = IGateKeeperTwo(0xd62aC5FA877956BDB0563A906A55dB0339A6F6B3);
 
     function setUp() public override {
         super.setUp();
@@ -42,7 +41,7 @@ contract GateKeeperTwoTest is BaseTest {
     function exploitYul() internal override {
         bytes memory initCode = type(GateKeeperTwoExploit).creationCode;
         assembly {
-            let size := mload(initCode)
+            // let size := mload(initCode)
         //     mstore(initCode, add(size, 0x20))
         //     mstore(add(initCode, add(0x20, size)), sload(instance.slot))
         //     pop(create(0, add(initCode, 0x20), mload(initCode)))
@@ -57,9 +56,6 @@ contract GateKeeperTwoTest is BaseTest {
     }
 
     function testExploitYul() public override {
-        exploitYul();
-    }
-    function testExploitYulX() public {
         exploitYul();
     }
 }

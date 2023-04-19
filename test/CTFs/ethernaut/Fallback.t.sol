@@ -2,7 +2,7 @@
 pragma solidity ^0.8.17;
 
 import "forge-std/Test.sol";
-import {IFallback} from "ethernaut/1IFallback.sol";
+import {IFallback} from "ethernaut/IFallback.sol";
 import {BaseTest} from "./BaseTest.t.sol";
 
 contract FallbackTest is BaseTest {

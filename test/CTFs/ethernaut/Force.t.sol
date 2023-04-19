@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.17;
 
-import {IForce} from "ethernaut/7Force.sol";
+import {IForce} from "ethernaut/IForce.sol";
 import {BaseTest} from "./BaseTest.t.sol";
 
 contract ForceExploit {

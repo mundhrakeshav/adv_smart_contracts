@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.17;
 
-import {IToken} from "ethernaut/5IToken.sol";
+import {IToken} from "ethernaut/IToken.sol";
 import {BaseTest} from "./BaseTest.t.sol";
 
 contract TokenTest is BaseTest {
