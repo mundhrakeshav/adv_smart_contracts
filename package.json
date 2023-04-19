@@ -1,0 +1,26 @@
+{
+  "name": "adv_smart_contracts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
+    "hardhat": "^2.14.0"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mundhrakeshav/adv_smart_contracts.git"
+  },
+  "keywords": [],
+  "author": "Keshav Mundhra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mundhrakeshav/adv_smart_contracts/issues"
+  },
+  "homepage": "https://github.com/mundhrakeshav/adv_smart_contracts#readme"
+}
